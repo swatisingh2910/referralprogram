@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <script>(function(w,d,s,u){let j=d.createElement(s);j.async=true;j.src="https://dev-assets.channelboost.com/scripts/cts.js?uid=" + u;let f=d.getElementsByTagName(s)[0];f.parentNode.insertBefore(j,f);})(window,document,"script","2aa1b5d6-7d71-4587-b78f-6a48c77706e4");</script>
   <script>
     (function (w, d, s, u) {
       let j = d.createElement(s);
@@ -97,12 +98,19 @@
         companyName: document.getElementById("company").value,
       };
 
-      if (typeof trackify !== "undefined" && typeof trackify.trackLead === "function") {
+      if (typeof trackify !== "undefined") {
+      if (typeof trackify.trackLead === "function") {
         trackify.trackLead(formData);
-        alert("Lead tracked successfully!");
-      } else {
-        console.warn("trackify is not available yet.");
       }
+
+      if (typeof trackify.trackEvent === "function") {
+        trackify.trackEvent("submit_btn");
+      }
+
+      alert("Lead tracked successfully!");
+    } else {
+      console.warn("trackify is not available yet.");
+    }
 
       // Optional: reset form
       // this.reset();
