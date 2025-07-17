@@ -1,6 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <script>
+    (function (w, d, s, u) {
+      let j = d.createElement(s);
+      j.async = true;
+      j.src = "https://dev-assets.channelboost.com/scripts/embeddingwidget.js?uid=" + u;
+      let f = d.getElementsByTagName(s)[0];
+      f.parentNode.insertBefore(j, f);
+    })(window, document, "script", "2aa1b5d6-7d71-4587-b78f-6a48c77706e4");
+  </script>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Dummy Form</title>
@@ -61,7 +70,7 @@
 
   <h2>Dummy Contact Form</h2>
 
-  <form>
+  <form id="leadForm">
     <label for="fname">First Name</label>
     <input type="text" id="fname" name="fname" placeholder="Enter your first name" />
 
@@ -72,10 +81,33 @@
     <input type="text" id="company" name="company" placeholder="Enter your company name" />
 
     <label for="email">Email</label>
-    <input type="email" id="email" name="email" placeholder="Enter your email address" />
+    <input type="email" id="email" name="email" placeholder="Enter your email address" required />
 
     <input type="submit" value="Submit" />
   </form>
+
+  <script>
+    document.getElementById("leadForm").addEventListener("submit", function (e) {
+      e.preventDefault();
+
+      const formData = {
+        email: document.getElementById("email").value,
+        firstName: document.getElementById("fname").value,
+        lastName: document.getElementById("lname").value,
+        companyName: document.getElementById("company").value,
+      };
+
+      if (typeof trackify !== "undefined" && typeof trackify.trackLead === "function") {
+        trackify.trackLead(formData);
+        alert("Lead tracked successfully!");
+      } else {
+        console.warn("trackify is not available yet.");
+      }
+
+      // Optional: reset form
+      // this.reset();
+    });
+  </script>
 
 </body>
 </html>
